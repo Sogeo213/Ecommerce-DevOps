@@ -1,0 +1,28 @@
+# === SECURITY RULES (លក្ខខណ្ឌសុវត្ថិភាព) ===
+# លាក់ឯកសារផ្ទុកកូនសោសម្ងាត់ និងអថេរបរិស្ថានទាំងអស់ (តម្រូវការដាច់ខាត)
+.env
+.env.[a-zA-Z]*
+!.env.example
+
+# === PYTHON / DJANGO RULES ===
+# លាក់ឯកសារដែល Python បង្កើតឡើងដោយស្វ័យប្រវត្តិនៅពេលរត់កូដ
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# លាក់ Virtual Environments របស់ Python (បើមាន)
+.venv/
+venv/
+env/
+ENV/
+
+# === DATABASE RULES ===
+# លាក់ SQLite Database ក្នុងម៉ាស៊ីន (ព្រោះយើងនឹងប្រើ PostgreSQL នៅលើ Container ជំនួសវិញ)
+db.sqlite3
+
+# === IDE & SYSTEM RULES ===
+# លាក់ឯកសារបណ្តោះអាសន្នរបស់ VS Code និងប្រព័ន្ធប្រតិបត្តិការ
+.vscode/
+.DS_Store
+*.swp
