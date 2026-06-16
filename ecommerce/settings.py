@@ -13,6 +13,26 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-for-dev')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*'] # សម្រាប់ Railway គឺ * គឺងាយស្រួលបំផុត
+# បន្ថែមបន្ទាត់ទាំងនេះដើម្បីដោះស្រាយ Error
+ROOT_URLCONF = 'my_project.urls'
+WSGI_APPLICATION = 'my_project.wsgi.application'
+
+# កំណត់កន្លែងផ្ទុក Template (ប្រសិនបើវានៅមិនទាន់មាន)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 # Database
 # នេះគឺជាកន្លែងដែលយើងកែសម្រួលដើម្បីដោះស្រាយ Error របស់អ្នក
