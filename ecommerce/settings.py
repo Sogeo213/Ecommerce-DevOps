@@ -14,8 +14,8 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*'] # សម្រាប់ Railway គឺ * គឺងាយស្រួលបំផុត
 # បន្ថែមបន្ទាត់ទាំងនេះដើម្បីដោះស្រាយ Error
-ROOT_URLCONF = 'my_project.urls'
-WSGI_APPLICATION = 'my_project.wsgi.application'
+ROOT_URLCONF = 'ecommerce.urls'
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # កំណត់កន្លែងផ្ទុក Template (ប្រសិនបើវានៅមិនទាន់មាន)
 TEMPLATES = [
