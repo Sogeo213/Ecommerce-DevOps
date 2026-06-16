@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Socheat Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-success" href="{% url 'product_list' %}">SOCHEAT STORE</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3 fw-bold">Shipping & Billing Address</h4>
+                <form method="POST" class="needs-validation" novalidate>
+    {% csrf_token %} <div class="row g-3">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label">First Name</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">Last Name</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Phone Number</label>
+                            {{ form.phone }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Address</label>
+                            {{ form.address }}
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <button class="w-100 btn btn-success btn-lg fw-bold" type="submit">Place Order & Pay</button>
+                </form>
+            </div>
+
+            <div class="col-md-5 col-lg-4">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted fw-bold">Your Cart Summary</span>
+                </h4>
+                <ul class="list-group mb-3 shadow-sm">
+                    {% for item_id, item in cart.items %}
+                        <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0 fw-bold">{{ item.name }}</h6>
+                                <small class="text-muted">Qty: {{ item.quantity }}</small>
+                            </div>
+                            <span class="text-muted">${{ item.price }}</span>
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <span class="text-success fw-bold">Total (USD)</span>
+                        <strong class="text-success fs-5">${{ total_price|stringformat:".2f" }}</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+import os
+
+# បង្កើត Base Directory សម្រាប់រក្សាទុកឯកសារ
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+SECRET_KEY = 'django-insecure-your-secret-key-here'
+DEBUG = True
+ALLOWED_HOSTS = ['*']
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    
+    # ត្រូវប្រាកដថាមាន App ទាំងនេះនៅទីនេះ៖
+    'accounts',
+    'products',
+    'orders',
+]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'ecommerce.urls'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
+
+# ការកំណត់ Database (សំខាន់បំផុតសម្រាប់ Docker)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'postgres'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres_password'), # ដូរតាម password របស់អ្នក
+        'HOST': os.environ.get('DB_HOST', 'db'),       # <--- ធានាថាបើទទេ វានឹងរត់ទៅរក container "db"
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    }
+}
+
+# ការកំណត់ Static Files (ដោះស្រាយបញ្ហា Design/CSS)
+STATIC_URL = '/static/'
+# ការកំណត់សម្រាប់ឯកសារដែល User ឬ Admin បញ្ចូល (រូបភាពទំនិញ)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

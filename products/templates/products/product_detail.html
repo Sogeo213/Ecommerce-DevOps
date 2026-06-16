@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - Socheat Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-success" href="{% url 'product_list' %}">SOCHEAT STORE</a>
+            <div class="ms-auto">
+                <a class="btn btn-outline-success btn-sm position-relative text-white px-3" href="{% url 'cart_detail' %}">
+                    🛒 Cart
+                    {% if request.session.cart %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ request.session.cart|length }}
+                        </span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <a href="{% url 'product_list' %}" class="btn btn-outline-secondary mb-4">&larr; Back to Shop</a>
+        
+        <div class="row bg-white p-4 rounded shadow-sm">
+            <div class="col-md-6 text-center">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}" style="max-height: 450px;">
+                {% else %}
+                    <img src="https://via.placeholder.com/450x450?text=No+Image" class="img-fluid rounded" alt="No Image">
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6 d-flex flex-column justify-content-center">
+                <span class="badge bg-secondary mb-2 align-self-start">{{ product.category.name }}</span>
+                <h1 class="fw-bold text-dark mb-3">{{ product.name }}</h1>
+                <h2 class="text-success fw-bold mb-4">${{ product.price }}</h2>
+                
+                <h5><strong>Product Description:</strong></h5>
+                <p class="text-muted mb-4">{{ product.description|default:"No description available for this item." }}</p>
+                
+                <hr>
+                
+                <div class="mb-4">
+                    <span class="fw-bold">Availability:</span> 
+                    {% if product.stock > 0 %}
+                        <span class="badge bg-success">In Stock ({{ product.stock }} units available)</span>
+                    {% else %}
+                        <span class="badge bg-danger">Out of Stock</span>
+                    {% endif %}
+                </div>
+                
+                {% if product.stock > 0 %}
+                    <a href="{% url 'cart_add' product.id %}" class="btn btn-success btn-lg fw-bold w-100 py-3">Add to Cart</a>
+                {% else %}
+                    <button class="btn btn-secondary btn-lg fw-bold w-100 py-3" disabled>Out of Stock</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p class="mb-0 small">&copy; 2026 Socheat Ecommerce. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Socheat Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+    <div class="card p-4 shadow border-0" style="width: 400px;">
+        <h3 class="fw-bold text-center mb-4">Sign In</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">{{ field.label }}</label>
+                    {{ field }}
+                    <span class="text-danger small">{{ field.errors }}</span>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success w-100 fw-bold py-2 mt-2">Login</button>
+        </form>
+        <p class="text-center small text-muted mt-3 mb-0">Don't have an account? <a href="{% url 'register' %}" class="text-success fw-bold text-decoration-none">Register here</a></p>
+    </div>
+
+    <script>
+        // បញ្ជាឱ្យប្រអប់វាយអក្សរស្អាតតាមបែប Bootstrap និងមិនឱ្យបាំងផ្ទាំងថ្លា
+        document.querySelectorAll('input:not([type="hidden"])').forEach(input => input.classList.add('form-control'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socheat Store - Online Shopping</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .product-card {
+            transition: transform 0.2s;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .product-img {
+            height: 250px;
+            object-fit: cover;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-success" href="{% url 'product_list' %}">SOCHEAT STORE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav ms-auto align-items-center">
+    <li class="nav-item">
+        <a class="nav-link active" href="{% url 'product_list' %}">Home</a>
+    </li>
+    
+    {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link text-warning fw-bold" href="{% url 'order_history' %}">Hello, {{ request.user.username }} 📜</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+    {% endif %}
+    
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/" target="_blank">Admin Panel</a>
+    </li>
+    <li class="nav-item ms-lg-2">
+        <a class="btn btn-outline-success btn-sm position-relative text-white px-3" href="{% url 'cart_detail' %}">
+            🛒 Cart
+            {% if request.session.cart %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ request.session.cart|length }}
+                </span>
+            {% endif %}
+        </a>
+    </li>
+</ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="fw-bold mb-4 text-center text-dark">Latest Arrivals</h2>
+        <hr class="w-25 mx-auto mb-5">
+
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+            {% for product in products %}
+                <div class="col">
+                    <div class="card h-100 product-card">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top product-img" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x250?text=No+Image" class="card-img-top product-img" alt="No Image">
+                        {% endif %}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-secondary mb-2 align-self-start">{{ product.category.name }}</span>
+                            <h5 class="card-title fw-bold text-dark mb-2">{{ product.name }}</h5>
+                            <p class="card-text text-muted small text-truncate mb-3">{{ product.description }}</p>
+                            <div class="mt-auto d-flex justify-content-between align-items-center">
+                                <span class="fs-5 fw-bold text-success">${{ product.price }}</span>
+                                <span class="text-muted small">Stock: {{ product.stock }}</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-top-0 pb-3">
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success w-100 btn-sm fw-bold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center my-5">
+                    <div class="alert alert-warning py-4" role="alert">
+                        <h4 class="alert-heading fw-bold">No products available yet!</h4>
+                        <p class="mb-0">Please log into the Admin Panel to add your first product.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p class="mb-0 small">&copy; 2026 Socheat Ecommerce. Built with Django & Docker.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
