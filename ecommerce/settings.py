@@ -1,12 +1,21 @@
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+import dj_database_url
 
-# បង្កើត Base Directory សម្រាប់រក្សាទុកឯកសារ
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 1. ផ្ទុកទិន្នន័យពីឯកសារ .env
+load_dotenv()
 
-SECRET_KEY = 'django-insecure-your-secret-key-here'
-DEBUG = True
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# 2. ប្រើ Environment Variables សម្រាប់ Security
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+
 ALLOWED_HOSTS = ['*']
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -14,11 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # ត្រូវប្រាកដថាមាន App ទាំងនេះនៅទីនេះ៖
-    'accounts',
-    'products',
-    'orders',
+    'products',  # 🎯 App របស់លោកអ្នក
 ]
 
 MIDDLEWARE = [
@@ -51,22 +56,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
-# ការកំណត់ Database (សំខាន់បំផុតសម្រាប់ Docker)
+# 3. Database configuration (អានពី .env)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'postgres'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres_password'), # ដូរតាម password របស់អ្នក
-        'HOST': os.environ.get('DB_HOST', 'db'),       # <--- ធានាថាបើទទេ វានឹងរត់ទៅរក container "db"
-        'PORT': os.environ.get('DB_PORT', '5432'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
 }
 
-# ការកំណត់ Static Files (ដោះស្រាយបញ្ហា Design/CSS)
-STATIC_URL = '/static/'
-# ការកំណត់សម្រាប់ឯកសារដែល User ឬ Admin បញ្ចូល (រូបភាពទំនិញ)
-MEDIA_URL = '/media/'
+# Password validation
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+]
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
