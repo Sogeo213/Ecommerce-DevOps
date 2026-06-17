@@ -71,4 +71,17 @@ DATABASES = {
 
 
 # 6. ការផ្ទៀងផ្ទាត់លេខកូដសម្ងាត់ (Password Validation)
-AUTH_PASSWORD_VALIDATORS =
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
