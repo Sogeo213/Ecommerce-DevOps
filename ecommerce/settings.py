@@ -17,8 +17,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'orders',
-    'products',
+    
+    # ត្រូវប្រាកដថាមានឈ្មោះ App របស់អ្នកនៅទីនេះ៖
+    'products', 
 ]
 
 # កំណត់ Domain ដើម្បីដោះស្រាយ Error 403
