@@ -6,13 +6,6 @@ from .models import Product, Order, OrderItem
 from .forms import OrderCreateForm
 from django.http import JsonResponse
 from .models import Product
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('list/', views.product_list, name='product-list'),
-    path('detail/<int:product_id>/', views.product_detail, name='product-detail'),
-]
 
 # ១. ទំព័របង្ហាញបញ្ជីទំនិញទាំងអស់
 def product_list(request):
