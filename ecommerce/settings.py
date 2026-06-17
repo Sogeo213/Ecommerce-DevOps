@@ -85,3 +85,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# កំណត់ប្រភេទ ID លំនាំដើមឱ្យទៅជា BigAutoField តាមស្តង់ដារ Django ថ្មី
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
