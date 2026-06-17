@@ -38,14 +38,14 @@
     
     {% if request.user.is_authenticated %}
         <li class="nav-item">
-            <a class="nav-link text-warning fw-bold" href="{% url 'order_history' %}">Hello, {{ request.user.username }} 📜</a>
+            <a class="nav-link text-warning fw-bold" href="#">Hello, {{ request.user.username }}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            <a class="nav-link" href="#">Logout</a>
         </li>
     {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          <a class="nav-link" href="#">Login</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'register' %}">Register</a>
